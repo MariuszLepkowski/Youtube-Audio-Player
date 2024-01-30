@@ -64,7 +64,7 @@ function updateUI() {
     progressBar.style.width = progressPercentage + '%';
 
     var youtubeIcon = document.getElementById('youtube-icon');
-    youtubeIcon.style.backgroundImage = 'url(' + (isPlaying ? '/static/pause.png' : '/static/play.png') + ')';
+    youtubeIcon.style.backgroundImage = 'url(' + (isPlaying ? '/static/assets/img/pause.png' : '/static/assets/img/play.png') + ')';
 
     var formattedTime = formatTime(currentTime) + ' / ' + formatTime(duration);
     durationElement.textContent = formattedTime;
