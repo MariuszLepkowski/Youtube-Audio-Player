@@ -1,5 +1,4 @@
 from flask import Blueprint
 
-hello_blueprint = Blueprint('hello', __name__)
 url_blueprint = Blueprint('url', __name__)
-
+audio_player_blueprint = Blueprint('audio_player', __name__)
