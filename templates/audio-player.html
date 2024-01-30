@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
     <style>
 
     </style>
@@ -23,10 +23,10 @@
 
     </div>
 
-    <div data-video="ZGBRg5DtYKc" data-autoplay="0" data-loop="1" id="youtube-audio"></div>
+    <div data-video="{{ video_id }}" data-autoplay="0" data-loop="1" id="youtube-audio"></div>
 
     <script src="https://www.youtube.com/iframe_api"></script>
-    <script src="/js/ytAudioPlayer.js"></script>
+    <script src="{{ url_for('static', filename='js/ytAudioPlayer.js') }}"></script>
 
 </body>
 </html>
