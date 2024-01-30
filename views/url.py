@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, redirect, url_for, request
+from flask import Blueprint, render_template, redirect, url_for, request, session
 from forms import UrlForm
 
 
@@ -15,10 +15,11 @@ def extract_video_id(video_url):
 @url_blueprint.route('/', methods=['GET', 'POST'])
 def enter_url():
     form=UrlForm()
-    url = request.form['video_url']
 
     if form.validate_on_submit():
+        url = request.form['video_url']
         video_id = extract_video_id(url)
-        return video_id
+        session['video_id'] = video_id
+        return redirect(url_for('audio_player.audio_player'))
 
     return render_template('url.html', form=form)
