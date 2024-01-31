@@ -5,12 +5,6 @@ var isPlaying = false;
 
 function onYouTubeIframeAPIReady() {
     var e = document.getElementById("youtube-audio");
-
-    if (!hasTitle(e)) {
-        showAlternativeLink(e.dataset.video);
-        return;
-    }
-
     var a = document.createElement("div");
     a.setAttribute("id", "youtube-player");
     e.appendChild(a);
@@ -32,7 +26,7 @@ function onYouTubeIframeAPIReady() {
                 duration = player.getDuration();
                 updateUI();
                 setInterval(updateTimeInfo, 1000);
-                updateTitle();
+                startTitleChecking();
             },
             onStateChange: function (e) {
                 if (e.data === YT.PlayerState.ENDED) {
@@ -43,12 +37,30 @@ function onYouTubeIframeAPIReady() {
                     isPlaying = false;
                 }
                 updateUI();
+            },
+            onError: function (e) {
+                showAlternativeLink(e.target.getVideoData().video_id);
             }
         }
     });
 }
 
+function startTitleChecking() {
+    var titleCheckInterval = setInterval(function() {
+        var titleElement = document.getElementById('title');
+        if (titleElement && titleElement.textContent.trim() !== "") {
+            clearInterval(titleCheckInterval);
+        } else {
+            showAlternativeLink(document.getElementById("youtube-audio").dataset.video);
+        }
+    }, 1000);
+}
+
 function hasTitle(element) {
+    if (!element) {
+        return false;
+    }
+
     var titleElement = element.querySelector('#title');
     return titleElement && titleElement.textContent.trim() !== "";
 }
