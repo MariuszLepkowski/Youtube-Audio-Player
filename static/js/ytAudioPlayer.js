@@ -5,6 +5,12 @@ var isPlaying = false;
 
 function onYouTubeIframeAPIReady() {
     var e = document.getElementById("youtube-audio");
+
+    if (!hasTitle(e)) {
+        showAlternativeLink(e.dataset.video);
+        return;
+    }
+
     var a = document.createElement("div");
     a.setAttribute("id", "youtube-player");
     e.appendChild(a);
@@ -40,6 +46,11 @@ function onYouTubeIframeAPIReady() {
             }
         }
     });
+}
+
+function hasTitle(element) {
+    var titleElement = element.querySelector('#title');
+    return titleElement && titleElement.textContent.trim() !== "";
 }
 
 function togglePlayPause() {
@@ -80,7 +91,6 @@ function updateTitle() {
     currentTitleElement.textContent = title;
 }
 
-
 function formatTime(time) {
     var minutes = Math.floor(time / 60);
     var seconds = Math.floor(time % 60);
@@ -93,4 +103,16 @@ function seekToTime(event) {
     var percentage = clickPosition / progressBar.clientWidth;
     var seekTime = duration * percentage;
     player.seekTo(seekTime);
+}
+
+function showAlternativeLink(videoId) {
+    var alternativeLinkDiv = document.getElementById('alternative-link');
+    alternativeLinkDiv.style.display = 'block';
+    alternativeLinkDiv.innerHTML = '<p>The audio/video available only on <a href="https://www.youtube.com/watch?v=' + videoId + '" target="_blank"><img id="youtube-logo" src="static/assets/img/YouTubeLogo.png" alt="YouTube Logo"> <br> Click to listen/watch.</a></p>';
+
+    var playerContainer = document.getElementById('container');
+    playerContainer.style.display = 'none';
+
+    var loadingDiv = document.getElementById('title');
+    loadingDiv.style.display = 'none';
 }
