@@ -27,17 +27,19 @@
     height: 37px;
     background-image: url('/play.png');
     background-size: cover;
-    margin-right: 10px;
+    margin-right: 14px;
 }
 
 /* Progress Bar Container */
 #progressContainer {
     width: 50%;
     height: 6px;
-    background-color: #f0f0f0;
+    background-color: #F0FFFF;
     position: relative;
     cursor: pointer;
 }
+
+
 
 /* Progress Bar */
 #progressBar {
@@ -66,12 +68,12 @@
 #timeInfo {
     margin: 5px 0;
     font-size: 16px;
-    margin-right: 10px;
+    margin-right: 70px;
+    margin-left: 17px;
 }
 
 .volume-slider {
-    width: 20%;
-    margin-left: 10px;
+    width: 15%;
     transform: translateY(-50%);
     float: right;
 }
@@ -79,7 +81,8 @@
 #volume-icon {
     width: 25px;
     height: auto;
-    margin-right: 10px;
+    margin-left: 50px;
+    margin-right: 20px;
     cursor: pointer;
     float: right;
 }
@@ -87,21 +90,24 @@
 #volumeButton {
     width: 25px;
     height: 25px;
+    margin-left: 50px;
+    margin-right: 3px;
     background-image: url('/static/assets/img/volume-up.svg');
     background-size: cover;
     cursor: pointer;
+    filter: invert(1);
 }
 
 #volumeButton.muted {
     background-image: url('/static/assets/img/volume-mute.svg');
 }
 
-    .footer {
-      position: fixed;
-      bottom: 0;
-      width: 100%;
-      background-color: #343a40;
-      color: #ffffff;
-      text-align: center;
-      padding: 10px 0;
-    }
+.footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background-color: #343a40;
+  color: #ffffff;
+  text-align: center;
+  padding: 10px 0;
+}
