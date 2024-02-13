@@ -34,7 +34,7 @@
 #progressContainer {
     width: 50%;
     height: 6px;
-    background-color: #F0FFFF;
+    background-color: #F5F5DC;
     position: relative;
     cursor: pointer;
 }
@@ -46,8 +46,7 @@
     height: 100%;
     background-color: #4caf50;
     width: 0;
-    transition: width 0.1s ease-in-out;
-
+    transition: width 0.1s linear;
 }
 
 /* Thumb */
@@ -73,7 +72,6 @@
 }
 
 .volume-slider {
-    width: 15%;
     transform: translateY(-50%);
     float: right;
 }
@@ -101,6 +99,12 @@
 #volumeButton.muted {
     background-image: url('/static/assets/img/volume-mute.svg');
 }
+
+
+.hidden {
+    display: none;
+}
+
 
 .footer {
   position: fixed;

@@ -247,6 +247,8 @@ function updateVolumeSlider() {
 // Call the function to update volume slider after the player is ready
 player.addEventListener('onReady', updateVolumeSlider);
 
+
+
 // Function to toggle mute/unmute
 function toggleMute() {
     var volumeSlider = document.getElementById('volumeSlider');
@@ -271,21 +273,144 @@ document.getElementById('volume-icon').addEventListener('click', function() {
     toggleMute();
 });
 
-// Function to update volume icon based on player's mute status and volume level
+// Function to update volume icon based on volume slider value
 function updateVolumeIcon() {
-    var volumeButton = document.getElementById('volumeButton');
     var volumeIcon = document.getElementById('volume-icon');
     var volumeSlider = document.getElementById('volumeSlider');
+    var volumeValue = parseInt(volumeSlider.value);
 
-    if (player.isMuted() || player.getVolume() === 0 || volumeSlider.value == 0) {
+    if (volumeValue === 0) {
         volumeIcon.src = '/static/assets/img/volume-mute.png';
     } else {
         volumeIcon.src = '/static/assets/img/volume-up.png';
     }
 }
 
-// Call the function to update volume icon after each volume change
-player.addEventListener('onVolumeChange', updateVolumeIcon);
+// Add event listener to update volume icon when volume slider value changes
+document.getElementById('volumeSlider').addEventListener('input', updateVolumeIcon);
 
 // Call the function to update volume icon after the player is ready
 player.addEventListener('onReady', updateVolumeIcon);
+
+
+
+
+
+// Function to move the progress thumb when clicked
+function moveProgressThumb(event) {
+    // Get the progress container element
+    var progressBar = document.getElementById('progressContainer');
+
+    // Calculate the click position relative to the progress container
+    var clickPosition = event.clientX - progressBar.getBoundingClientRect().left;
+
+    // Calculate the percentage of the progress
+    var percentage = clickPosition / progressBar.clientWidth;
+
+    // Calculate the seek time based on the percentage
+    var seekTime = duration * percentage;
+
+    // Seek to the calculated time in the video player
+    player.seekTo(seekTime);
+
+    // Update the position of the progress thumb
+    var progressThumb = document.getElementById('progressThumb');
+    progressThumb.style.left = percentage * 100 + '%';
+}
+
+// Add event listener for clicking on the progress container to move the progress thumb
+document.getElementById('progressContainer').addEventListener('click', moveProgressThumb);
+
+// Function for smooth transition of the progress thumb
+function smoothMoveProgressThumb() {
+    // Get the progress thumb element
+    var progressThumb = document.getElementById('progressThumb');
+
+    // Add transition property for smooth movement
+    progressThumb.style.transition = 'left 0.1s linear';
+}
+
+// Add event listener for transition end to remove transition property
+document.getElementById('progressThumb').addEventListener('transitionend', function() {
+    // Remove the transition property after transition ends
+    this.style.transition = '';
+});
+
+// Function to update the time on seeking
+function updateTimeOnSeek() {
+    // Get the current time of the video player
+    currentTime = player.getCurrentTime();
+
+    // Update the UI to reflect the new time
+    updateUI();
+}
+
+// Add event listener for transition end to update time on seeking
+document.getElementById('progressThumb').addEventListener('transitionend', updateTimeOnSeek);
+
+// Function to continuously update the progress thumb position based on the current time
+function updateProgressThumb() {
+    // Calculate the percentage progress of the video
+    var progressPercentage = (currentTime / duration) * 100;
+
+    // Get the progress thumb element
+    var progressThumb = document.getElementById('progressThumb');
+
+    // Set the left position of the progress thumb to match the progress percentage
+    progressThumb.style.left = progressPercentage + '%';
+}
+
+// Call the function to update the progress thumb position continuously
+setInterval(updateProgressThumb, 100); // Adjust the interval for smoother movement
+
+
+
+// Function to move the progress thumb and progress bar together when clicked and dragged
+function moveProgressThumbAndBar(event) {
+    // Prevent default behavior to avoid text selection
+    event.preventDefault();
+
+    // Get the progress container element
+    var progressBar = document.getElementById('progressContainer');
+
+    // Calculate the click position relative to the progress container
+    var clickPosition = event.clientX - progressBar.getBoundingClientRect().left;
+
+    // Calculate the percentage of the progress
+    var percentage = clickPosition / progressBar.clientWidth;
+
+    // Limit the percentage to be within 0 and 1
+    percentage = Math.max(0, Math.min(1, percentage));
+
+    // Calculate the seek time based on the percentage
+    var seekTime = duration * percentage;
+
+    // Seek to the calculated time in the video player
+    player.seekTo(seekTime);
+
+    // Update the position of the progress thumb and progress bar
+    var progressThumb = document.getElementById('progressThumb');
+    progressThumb.style.left = percentage * 100 + '%';
+    var progressBar = document.getElementById('progressBar');
+    progressBar.style.width = percentage * 100 + '%';
+}
+
+// Add event listener for mousedown to start dragging the progress thumb and progress bar
+document.getElementById('progressContainer').addEventListener('mousedown', function(event) {
+    // Call the function to move the progress thumb and progress bar together
+    moveProgressThumbAndBar(event);
+
+    // Add event listener for mousemove to continue dragging
+    document.addEventListener('mousemove', moveProgressThumbAndBar);
+
+    // Function to handle mouseup event
+    function handleMouseUp() {
+        // Remove event listeners for mousemove and mouseup when dragging stops
+        document.removeEventListener('mousemove', moveProgressThumbAndBar);
+        document.removeEventListener('mouseup', handleMouseUp);
+    }
+
+    // Add event listener for mouseup to stop dragging
+    document.addEventListener('mouseup', handleMouseUp);
+});
+
