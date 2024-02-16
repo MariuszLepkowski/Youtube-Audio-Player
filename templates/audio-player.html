@@ -26,8 +26,8 @@
                 <div id="timeInfo">0:00 / 0:00</div>
                 <div id="volumeButton" onclick="toggleMute()"></div>
 
-                <!-- Slider for volume control -->
-                <input type="range" min="0" max="100" value="100" step="1" id="volumeSlider" oninput="changeVolume(this.value)">
+<!-- Slider for volume control -->
+                <input type="range" min="0" max="100" value="100" step="1" id="volumeSlider" oninput="changeVolume(this.value); updateVolumeIcon();">
 
             </div>
         </div>

@@ -250,21 +250,23 @@ player.addEventListener('onReady', updateVolumeSlider);
 
 
 // Function to toggle mute/unmute
+var previousVolume = 100;
+
 function toggleMute() {
     var volumeSlider = document.getElementById('volumeSlider');
     var volumeButton = document.getElementById('volumeButton');
 
     if (player.isMuted()) {
+
         player.unMute();
         volumeButton.classList.remove('muted');
         volumeSlider.value = previousVolume;
-        changeVolume(previousVolume);
+        player.setVolume(previousVolume);
     } else {
         previousVolume = volumeSlider.value;
         player.mute();
         volumeButton.classList.add('muted');
         volumeSlider.value = 0;
-        changeVolume(0);
     }
 }
 
@@ -413,4 +415,21 @@ document.getElementById('progressContainer').addEventListener('mousedown', funct
     // Add event listener for mouseup to stop dragging
     document.addEventListener('mouseup', handleMouseUp);
 });
+
+function updateVolumeIcon() {
+    var volumeButton = document.getElementById('volumeButton');
+    if (volumeButton) {
+        var volumeSlider = document.getElementById('volumeSlider');
+        var volumeValue = parseInt(volumeSlider.value);
+
+        if (volumeValue === 0) {
+            volumeButton.classList.add('muted');
+        } else {
+            volumeButton.classList.remove('muted');
+        }
+    }
+}
+
+
+document.getElementById('volumeSlider').addEventListener('input', updateVolumeIcon);
 
