@@ -20,6 +20,27 @@
     margin-bottom: 15px;
 }
 
+#alternative-link a {
+    display: flex;
+    flex-direction: column; /* Ustawienie układu kolumnowego dla elementów potomnych */
+    align-items: center; /* Równanie elementów w pionie */
+    justify-content: center; /* Centrowanie elementów w poziomie */
+    text-decoration: none; /* Usunięcie domyślnego podkreślenia dla linku */
+    margin-top: 3px; /* Przesunięcie w dół o 3 piksele */
+}
+
+#youtube-logo {
+    width: 80px; /* Dostosuj szerokość według potrzeb */
+    height: auto; /* Automatycznie dostosuj wysokość zachowując proporcje */
+    margin-top: 5px; /* Przesunięcie w dół o 5 pikseli */
+}
+
+#alternative-link p {
+    margin: 0; /* Resetuje domyślne marginesy dla elementów <p> */
+    text-align: center; /* Wyśrodkowanie tekstu w poziomie */
+}
+
+
 /* YouTube Icon */
 #youtube-icon {
     cursor: pointer;
